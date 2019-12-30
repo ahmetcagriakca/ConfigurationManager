@@ -1,0 +1,81 @@
+version: "3"
+services:
+  mongo-db:
+    environment:
+      - MONGO_DATA_DIR=/data/db
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "32768:27017" 
+    networks:
+      - docker-network
+    restart: always 
+
+  identity-postgre-db:
+    environment:
+      - POSTGRES_USER=identity
+      - POSTGRES_PASSWORD=identity!123
+      - POSTGRES_DB=IdentityDb
+    ports:
+      - "5432:5432"
+    volumes:
+      - identity-pg-data:/var/lib/postgresql/data
+    restart: always
+
+  elasticsearch:
+     container_name: elasticsearch
+     ports:
+      - "9200:9200"
+     volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+     networks:
+      - docker-network
+
+  kibana:
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - docker-network   
+
+  identity-server:
+    ports:
+      - '85:80'
+    depends_on:
+      - mongo-db   
+      - elasticsearch 
+      - identity-postgre-db 
+    networks:
+      - docker-network
+    restart: always
+
+  services-api:
+    ports:
+      - '83:80'
+    depends_on:
+      - mongo-db   
+      - elasticsearch 
+      - identity-server
+    networks:
+      - docker-network
+    restart: always
+
+  web-spa:
+    ports:
+      - '84:80'
+    depends_on:
+      - services-api 
+    restart: always
+        
+networks:
+  docker-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local  
+  identity-pg-data:
+    driver: local
+  elasticsearch-data:

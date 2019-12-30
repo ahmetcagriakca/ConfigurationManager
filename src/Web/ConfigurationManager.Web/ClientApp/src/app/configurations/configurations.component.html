@@ -1,0 +1,66 @@
+<p *ngIf="!configurations"><em>Loading...</em></p>
+<div class="md-form mt-0">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-10">
+				<input class="form-control" [(ngModel)]='searchText' type="text" placeholder="Search"
+					aria-label="Search">
+			</div>
+			<div class="col-sm-1">
+				<button type="button" class="btn btn-primary" (click)="loadData()">Refresh</button>
+			</div>
+			<div class="col-sm-1">
+				<button type="button" class="btn btn-primary" (click)="add()">Add</button>
+			</div>
+		</div>
+	</div>
+</div>
+<table class='table table-striped' *ngIf="configurations ">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Name </th>
+			<th>Type </th>
+			<th>Value </th>
+			<th>Application Name </th>
+			<th>Is Active</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let configuration of configurations | searchfilter:searchText">
+			<td> <span>{{configuration.id}}</span></td>
+			<td><input *ngIf="!enableEdit || !enableAdd" [(ngModel)]="configuration.name"> <span
+					*ngIf="enableEdit&& enableAdd">{{configuration.name}}</span></td>
+			<td><input *ngIf="!enableEdit || !enableAdd" [(ngModel)]="configuration.type"> <span
+					*ngIf="enableEdit&& enableAdd">{{configuration.type}}</span></td>
+			<td><input *ngIf="!enableEdit || !enableAdd" [(ngModel)]="configuration.value"> <span
+					*ngIf="enableEdit&& enableAdd">{{configuration.value}}</span></td>
+			<td><input *ngIf="!enableEdit || !enableAdd" [(ngModel)]="configuration.applicationName"> <span
+					*ngIf="enableEdit && enableAdd">{{configuration.applicationName}}</span></td>
+			<td><input type="checkbox" *ngIf="!enableEdit || !enableAdd" [(ngModel)]="configuration.isActive"> <span
+					*ngIf="enableEdit && enableAdd">{{configuration.isActive}}</span></td>
+			<td>
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-6">
+							<button type="button" class="btn btn-primary" *ngIf="enableEdit && enableAdd"
+								(click)="update(configuration)">Update</button>
+						</div>
+						<div class="col-sm-6">
+							<button type="button" class="btn btn-primary" *ngIf="enableEdit && enableAdd"
+								(click)="delete(configuration)">Delete</button>
+						</div>
+						<div class="col-sm-6">
+							<button type="button" class="btn btn-primary" *ngIf="!enableEdit ||!enableAdd"
+								(click)="save(configuration)">Save</button>
+						</div>
+						<div class="col-sm-6">
+							<button type="button" class="btn btn-primary" *ngIf="!enableEdit ||!enableAdd"
+								(click)="cancel()">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>

@@ -1,0 +1,13 @@
+﻿CASE - 1 bir storedan konfigurasyon bilgilerinin eklenmesi ve çekilmesinin sağlanması
+
+CASE - 2 Eklenen konfigurasyon değerinin güncellenmesi ve kontrol edilmesi
+
+CASE - 3 Storagedan değer çekilmesinin sağlanması- 
+
+CASE - 4 Kütüphane storage’a erişemediğinde son başarılı konfigürasyon kayıtları ile çalışabilmelidir.
+
+CASE - 5 Kütüphane storage’a erişemediğinde son başarılı konfigürasyon kayıtları ile çalışabilmelidir.	
+
+CASE - 6 Her servis yalnızca kendi konfigürasyon kayıtlarına erişebilmeli, başkasının kayıtlarını görmemelidir.
+
+CASE - 7 Sistem parametrik olarak verilen süre periyodunda yeni kayıtları ve kayıt değişikliklerini kontrol etmelidir.

@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  mongo-db:
+    image: mongo
+                    
+
+  identity-postgre-db:
+    image: ahmetcagriakca/postgres:latest
+
+  elasticsearch:
+     image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.4
+              
+  identity-server:
+    build:
+      context: src/Services/Identity/
+      dockerfile: Dockerfile
+
+  services-api:
+    build: 
+      context: src/Services/API/
+      dockerfile: ConfigurationManager.Api/Dockerfile
+
+  web-spa:
+    build: 
+      context: src/Web/ConfigurationManager.Web/
+      dockerfile: Dockerfile
+
+volumes:
+  mongodata:
+    driver: local

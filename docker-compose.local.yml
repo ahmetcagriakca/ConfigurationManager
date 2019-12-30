@@ -1,0 +1,59 @@
+version: "3"
+services:
+  mongo-db:
+    environment:
+      - MONGO_DATA_DIR=/data/db
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "32768:27017" 
+    networks:
+      - docker-network
+    restart: always
+
+  kibana:
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - docker-network  
+
+  identity-server:
+    ports:
+      - '85:80'
+    depends_on:
+      - mongo-db   
+      - elasticsearch 
+    networks:
+      - docker-network
+    restart: always
+
+  services-api:
+    ports:
+      - '83:80'
+    depends_on:
+      - mongo-db   
+      - elasticsearch 
+    networks:
+      - docker-network
+    restart: always
+
+  web-spa:
+    ports:
+      - '84:80'
+    environment:
+      - BASE_URL=http://localhost:83/
+    depends_on:
+      - services-api 
+    restart: always
+        
+networks:
+  docker-network:
+    driver: bridge
+
+volumes:
+  mongodata:
+    driver: local 
+  elasticsearch-data:
