@@ -31,7 +31,7 @@
 		"font-awesome": "4.7.0",
 		"fullcalendar": "4.0.0-alpha",
 		"intl": "1.2.5",
-		"jquery": "3.3.1",
+		"jquery": "3.5.0",
 		"moment": "2.24.0",
 		"primeng": "^7.0.0",
 		"primeicons": "^1.0.0-beta.10",
